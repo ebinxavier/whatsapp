@@ -2,6 +2,9 @@
   <Home />
 </template>
 
+
+
+
 <script>
 import Home from "./Screens/Home";
 
