@@ -1,5 +1,5 @@
 <template>
-  <div class="item">
+  <div @click="onClickHndlr" class="item">
     <Avatar :avatar="avatar" :avatarColor="avatarColor" />
     <div class="details">
       <span class="name">
@@ -12,9 +12,9 @@
       </span>
     </div>
     <div style="float: right">
-      <span class="time">{{ time }}</span>
+      <span v-if="count" class="time">{{ time }}</span>
       <br />
-      <span class="count">{{ count }}</span>
+      <span v-if="count" class="count">{{ count }}</span>
     </div>
   </div>
   <Divider />
@@ -24,17 +24,16 @@
 import { getRandomColor } from "../../helpers";
 import Avatar from "../Comon/Avatar";
 import Divider from "./Divider";
-import Check from '../Comon/Check';
+import Check from "../Comon/Check";
 
 export default {
-  props: ["name", "time", "count", "lastMessage"],
+  props: ["roomId", "name", "time", "count", "lastMessage", "onClick"],
   data() {
     return {
       checkType: "double",
     };
   },
-  mounted() {
-  },
+  mounted() {},
   components: {
     Avatar,
     Divider,
@@ -48,12 +47,22 @@ export default {
       return getRandomColor();
     },
   },
+  methods: {
+    onClickHndlr() {
+      console.log(this.roomId)
+      this.onClick(this.roomId);
+    },
+  },
 };
 </script>
 
 <style>
 .item {
   padding: 10px;
+  cursor: pointer;
+}
+.item:hover {
+  background: #323739;
 }
 .details {
   margin-left: 15px;

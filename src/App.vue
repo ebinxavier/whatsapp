@@ -1,14 +1,38 @@
+ <!-- <template>
+   <Home v-if="socket" :socket="socket" />
+ </template> -->
+
 <template>
-  <Home />
+  <div>
+    <router-view />
+  </div>
 </template>
 
 <script>
-import Home from "./Screens/Home";
+import io from "socket.io-client";
+import { baseUrl } from "./helpers";
 
 export default {
   name: "App",
-  components: {
-    Home,
+  data() {
+    return {
+      socket: null,
+    };
+  },
+  methods: {
+   navigate(path){
+     this.$router.push(path)
+   }
+  },
+  mounted() {
+    this.socket = io(baseUrl);
+    this.socket.on("connect", () => {
+      console.log("Connected!");
+      // this.socket.to("game").emit("nice game", "let's play a game");
+    });
+    // this.socket.on("init",(data)=>{
+    //   console.log(data);
+    // })
   },
 };
 </script>
@@ -28,7 +52,8 @@ body {
 h1 {
   margin: 0;
 }
-textarea:focus, input:focus{
-    outline: none;
+textarea:focus,
+input:focus {
+  outline: none;
 }
 </style>

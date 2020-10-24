@@ -1,105 +1,47 @@
 <template>
   <div class="chats">
-    <ChatItem
-      v-for="chat in chats"
-      :key="chat.name"
-      :name="chat.name"
-      :time="chat.time"
-      :count="chat.count"
-      :lastMessage="chat.lastMessage"
-    />
+    <div v-if="loading" style="text-align: center"><Loading /></div>
+    <div v-if="!loading">
+      <ChatItem
+        v-for="chat in chats"
+        :key="chat.roomId"
+        :roomId="chat.roomId"
+        :name="chat.name"
+        :time="chat.time"
+        :count="chat.count"
+        :lastMessage="chat.lastMessage"
+        :onClick="onClick"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import ChatItem from "./ChatItem";
+import Loading from "../Comon/Loading";
 
 export default {
-  props: ["title"],
+  props: ["loading", "title", "chats", "setSelectedRoom"],
   data() {
     return {
-      chats: [
-        {
-          name: "Ebin",
-          time: "1:45 PM",
-          count: 214,
-          lastMessage: "Hello",
-        },
-        {
-          name: "Dibin",
-          time: "1:45 PM",
-          count: 2224,
-          lastMessage: "Hi",
-        },
-        {
-          name: "John",
-          time: "1:45 PM",
-          count: 324,
-          lastMessage: "Thanks",
-        },
-
-        {
-          name: "Jabir",
-          time: "1:45 PM",
-          count: 243,
-          lastMessage: "Hello",
-        },
-        {
-          name: "Suresh",
-          time: "1:45 PM",
-          count: 224,
-          lastMessage: "Hi",
-        },
-        {
-          name: "Yadhu",
-          time: "1:45 PM",
-          count: 9024,
-          lastMessage: "Thanks",
-        },
-        {
-          name: "Ebin",
-          time: "1:45 PM",
-          count: 214,
-          lastMessage: "Hello",
-        },
-        {
-          name: "Dibin",
-          time: "1:45 PM",
-          count: 2224,
-          lastMessage: "Hi",
-        },
-        {
-          name: "John",
-          time: "1:45 PM",
-          count: 324,
-          lastMessage: "Thanks",
-        },
-
-        {
-          name: "Jabir",
-          time: "1:45 PM",
-          count: 243,
-          lastMessage: "Hello",
-        },
-        {
-          name: "Suresh",
-          time: "1:45 PM",
-          count: 224,
-          lastMessage: "Hi",
-        },
-        {
-          name: "Yadhu",
-          time: "1:45 PM",
-          count: 9024,
-          lastMessage: "Thanks",
-        },
-      ],
+      // chats: [
+      //   // {
+      //   //   name: "Ebin",
+      //   //   time: "1:45 PM",
+      //   //   count: 214,
+      //   //   lastMessage: "Hello",
+      //   // },
+      // ],
     };
   },
-  mounted() {},
-  updated() {},
   components: {
     ChatItem,
+    Loading,
+  },
+  methods: {
+    onClick(chat) {
+      this.setSelectedRoom(chat);
+    },
   },
 };
 </script>

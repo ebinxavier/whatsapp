@@ -1,30 +1,24 @@
 <template>
-  <div class="chat-window">
-    <ChatHeader :avatar="avatar" type="details" name="Ebin Xavier" />
+  <DefaultRoom v-if="!selectedRoom" />
+  <div v-if="selectedRoom" class="chat-window">
+    <ChatHeader :avatar="avatar" type="details" :name="name" />
     <div class="chat-box">
-      <From message="This is a from message." time="4:23 PM" />
-      <From message="This is a from message." time="4:23 PM" />
-      <Date />
-
-      <From message="This is a from message." time="4:23 PM" />
-      <To
-        message="Ehis A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message."
-        time="4:23 PM"
-        checkType="seen"
-      />
-      <Date />
-      <To
-        message="Ehis A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message."
-        time="4:23 PM"
-        checkType="seen"
-      />
-      <To
-        message="Ehis A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message.This is a to message. A long message to demonstrste multiple line message."
-        time="4:23 PM"
-        checkType="seen"
-      />
+      <div :key="chat.id" v-for="chat in chats">
+        <From
+          v-if="chat.type === 'from'"
+          :message="chat.message"
+          :time="chat.time"
+        />
+        <To
+          v-if="chat.type === 'to'"
+          :message="chat.message"
+          :time="chat.time"
+          :checkType="chat.checkType"
+        />
+        <Date v-if="chat.type === 'date'" :date="chat.date" />
+      </div>
     </div>
-    <Footer />
+    <Footer :sendMessage="sendMessage" />
   </div>
 </template>
 
@@ -34,8 +28,40 @@ import From from "./From";
 import To from "./To";
 import Date from "./Date";
 import Footer from "./Footer";
+import DefaultRoom from "./DefaultRoom";
 
 export default {
+  data() {
+    return {
+      chats: [
+        {
+          id: "1",
+          type: "to",
+          message: "Hello",
+          time: "2:25 AM",
+          checkType: "seen",
+        },
+        {
+          id: "2",
+          type: "date",
+          date: window.Date.now(),
+        },
+        {
+          id: "3",
+          type: "from",
+          message: "Hello",
+          time: "2:25 AM",
+        },
+        {
+          id: "4",
+          type: "to",
+          message: "Hello",
+          time: "2:25 AM",
+          checkType: "double",
+        },
+      ],
+    };
+  },
   computed: {
     avatar() {
       return this.name[0].toUpperCase();
@@ -47,8 +73,9 @@ export default {
     To,
     Date,
     Footer,
+    DefaultRoom,
   },
-  props: ["name"],
+  props: ["name", "sendMessage", "selectedRoom"],
 };
 </script>
 
@@ -57,7 +84,8 @@ export default {
   flex: 1;
 }
 .chat-box {
-  background-image: url("/bg.jpg");
+  background: black;
+  background-image: url("/whatsapp/bg.jpg");
   height: calc(100vh - 115px);
   background-size: cover;
   padding: 0 50px;

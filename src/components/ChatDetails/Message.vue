@@ -2,31 +2,42 @@
   <div class="search-bar">
     <div class="search-icon-parent">
       <span class="search-icon">
-        <Button :icon="Emoticon" />
-        <Button style="transform: rotateZ(125deg)" :icon="Attachment" />
+        <!-- <Button :icon="Emoticon" /> -->
+        <!--  <Button style="transform: rotateZ(125deg)" :icon="Attachment" />-->
       </span>
     </div>
-    <input class="input-box" placeholder="Search or start new chat" />
+    <input v-model="message" @keyup="handleMessage" class="input-box" placeholder="Type Message" />
     <span class="mic">
-      <Button :icon="Microphone" />
+      <!--  <Button :icon="Microphone" />-->
     </span>
   </div>
 </template>
 
 <script>
 import { Emoticon, Attachment, Microphone } from "mdue";
-import Button from "../Comon/Button";
+// import Button from "../Comon/Button";
 
 export default {
+  props:["sendMessage"],
   components: {
-    Button,
+    // Button,
   },
   data() {
     return {
       Microphone,
       Emoticon,
       Attachment,
+      message:"",
     };
+  },
+  methods:{
+    handleMessage(event){
+      if(event.key === 'Enter'){
+      console.log(event.target.value);
+      this.sendMessage(event.target.value)
+      this.message="";
+      }
+    }
   },
 };
 </script>

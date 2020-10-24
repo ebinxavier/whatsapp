@@ -2,7 +2,7 @@
   <div class="chats">
     <ChatHeader :avatar="avatar" type="list" />
     <ChatSearch />
-    <Chats />
+    <Chats :loading="loading" :chats="chats" :setSelectedRoom="setSelectedRoom" />
   </div>
 </template>
 
@@ -12,6 +12,7 @@ import ChatSearch from "./ChatSearch";
 import Chats from "./Chats";
 
 export default {
+  props: ["loading","chats","setSelectedRoom"],
   data() {
     return {
       name: "dibin ",

@@ -1,15 +1,16 @@
 <template>
   <div>
-    <Search />
+    <Message :sendMessage="sendMessage" />
   </div>
 </template>
 
 <script>
-import Search from "./Search";
+import Message from "./Message";
 
 export default {
+  props:["sendMessage"],
   components: {
-    Search,
+    Message,
   },
 };
 </script>

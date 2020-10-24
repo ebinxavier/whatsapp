@@ -43,4 +43,8 @@ export const colors = [
   "#e6e6fa",
 ];
 
-export const getRandomColor = () => colors[Math.floor(Math.random()*colors.length)];
+export const getRandomColor = () =>
+  colors[Math.floor(Math.random() * colors.length)];
+
+// export const baseUrl = "http://localhost:3030";
+export const baseUrl = "https://common-apis.herokuapp.com";
